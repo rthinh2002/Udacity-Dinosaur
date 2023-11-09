@@ -1,0 +1,51 @@
+﻿@page
+@model IndexModel
+@{
+    ViewData["Title"] = "Dinosaur";
+}
+
+@if (!Model.Submitted)
+{
+    <form id="dino-compare" method="post">
+        <div class="form-container">
+            <p>Name:</p>
+            <input id="name" class="form-field__full" type="text" name="Name">
+            <p>Height</p>
+            <label>Inches: <input id="inches" class="form-field__short" type="number" name="Height"></label>
+            <p>Weight:</p>
+            <label><input id="weight" class="form-field__full" type="number" name="Weight">lbs</label>
+            <p>Diet:</p>
+            <select id="diet" class="form-field__full" name="Diet">
+                <option>Herbavor</option>
+                <option>Omnivor</option>
+                <option>Carnivor</option>
+            </select>
+            <button id="btn" type="submit">Compare Me!</button>
+        </div>
+    </form>
+}
+else
+{
+    <main id="grid">
+        @{
+            int dinoIndex = 0;
+            foreach (var dino in Model.ReadableDinos)
+            {
+                <div class="grid-item">
+                    <h3>@dino.species</h3>
+                    <img src="@dino.ImageUrl" alt="@dino.species">
+                    <p>@dino.fact</p>
+                </div>
+
+                if (dinoIndex == Model.ReadableDinos.Count() / 2 - 1)
+                {
+                    <div class="grid-item">
+                        <h3>@Model.Human.Name</h3>
+                        <img src="/images/human.png" alt="Human" />
+                    </div>
+                }
+                dinoIndex++;
+            }
+        }
+    </main>
+}
